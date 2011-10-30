@@ -31,10 +31,11 @@ methods
 
 var pw = require('pw');
 
-pw(sep='*', cb)
+pw(sep='*', stream=process.stdin, cb)
 ---------------
 
-Prompt for a password, placing the string `sep` for each key the user types in.
+Prompt for a password on `stream`, placing the string `sep` for each key the
+user types in.
 
 Use `''` for `sep` to not show any characters.
 
