@@ -46,7 +46,7 @@ module.exports = function () {
             if (stream.in === process.stdin) {
                 tty.setRawMode(false);
             }
-            stream.in.pause();
+            if (stream.in.pause) stream.in.pause();
             stream.in.removeListener('data', ondata);
         }
         
@@ -68,6 +68,7 @@ module.exports = function () {
                 finish();
                 if (stream.out) stream.out.write('\r\n');
                 cb(line);
+                break;
             }
             else {
                 if (stream.out) stream.out.write(sep);
@@ -76,5 +77,5 @@ module.exports = function () {
         }
     });
     
-    stream.in.resume();
+    if (stream.in.resume) stream.in.resume();
 };

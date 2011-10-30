@@ -19,7 +19,7 @@ test('prompt', function (t) {
     
     pw(stream.in, stream.out, function (pass) {
         t.equal(pass, 'beep');
-        t.equal(data, '****');
+        t.equal(data, '****\r\n');
         t.end();
     });
     
