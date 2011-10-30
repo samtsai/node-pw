@@ -1,4 +1,4 @@
-var pw = require('pw');
+var pw = require('../');
 
 process.stdout.write('Password: ');
 pw(function (password) {

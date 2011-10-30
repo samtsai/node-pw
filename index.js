@@ -60,6 +60,11 @@ module.exports = function () {
                 cb(line);
                 return;
             }
+            else if (buf[0] === 0x7f) {
+                line = line.slice(0,-1);
+                if (stream.out) stream.out.write('\b \b');
+                return;
+            }
         }
         
         for (var i = 0; i < buf.length; i++) {
