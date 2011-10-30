@@ -61,8 +61,10 @@ module.exports = function () {
                 return;
             }
             else if (buf[0] === 0x7f) {
+                if (stream.out && line.length) {
+                    stream.out.write('\b \b');
+                }
                 line = line.slice(0,-1);
-                if (stream.out) stream.out.write('\b \b');
                 return;
             }
         }
