@@ -1,5 +1,3 @@
-var tty = require('tty');
-
 module.exports = function () {
     var opts = {
         seperator : '*',
@@ -7,7 +5,7 @@ module.exports = function () {
         out : process.stdout,
         cb : function () {}
     };
-    
+
     for (var i = 0; i < arguments.length; i++) {
         var arg = arguments[i];
         switch (typeof arg) {
@@ -27,29 +25,29 @@ module.exports = function () {
                 break;
         }
     }
-    
+
     var stream = {
         in : opts.in,
         out : opts.out
     };
-    
+
     var sep = opts.seperator;
     var cb = opts.cb;
-    
+
     if (stream.in === process.stdin) {
-        tty.setRawMode(true);
+        process.stdin.setRawMode(true);
     }
-    
+
     var line = '';
     stream.in.on('data', function ondata (buf) {
         function finish () {
             if (stream.in === process.stdin) {
-                tty.setRawMode(false);
+                process.stdin.setRawMode(false);
             }
             if (stream.in.pause) stream.in.pause();
             stream.in.removeListener('data', ondata);
         }
-        
+
         if (buf.length === 1) {
             if (buf[0] === 3) {
                 finish();
@@ -68,7 +66,7 @@ module.exports = function () {
                 return;
             }
         }
-        
+
         for (var i = 0; i < buf.length; i++) {
             var c = String.fromCharCode(buf[i]);
             if (c === '\n' || c === '\r') {
@@ -83,6 +81,6 @@ module.exports = function () {
             }
         }
     });
-    
+
     if (stream.in.resume) stream.in.resume();
 };
